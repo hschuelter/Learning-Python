@@ -1,15 +1,25 @@
 import numpy as np
-from PIL import Image as im
+import cv2
 
-pic = im.open('triforce.jpg')
+def resize(original, dimension_x, dimension_y):
+	x, y =  original.shape[0], original.shape[1]
+	new_img = np.zeros( (dimension_x, dimension_y, 3) , np.uint8)
 
-x = 200
-y = 800
+	xskip = x / dimension_x
+	yskip = y / dimension_y
 
-imgSmall = pic.resize((x, x), im.ANTIALIAS)
-imgBig = pic.resize((y,y), im.ANTIALIAS)
+	for i in range(0, x, xskip):
+		for j in range(0, y, yskip):
+			new_img[i/xskip][j/yskip] = original[i][j]
+
+	return new_img
 
 
-pic.show()
-imgSmall.show()
-imgBig.show()
+
+img = cv2.imread('triforce.jpg')
+img2 = resize(img,200,200)
+
+
+cv2.imshow('Image', img2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
