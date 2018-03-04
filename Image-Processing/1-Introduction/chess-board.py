@@ -18,8 +18,7 @@ def makeBoard(x, y, sqr_size):
 	return board
 
 
-board = makeBoard(256,256,64)
-print board
+board = makeBoard(256,256,32)
 
 cv2.imshow('Image', board)
 cv2.waitKey(0)
