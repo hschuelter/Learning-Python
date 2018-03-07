@@ -1,10 +1,10 @@
-def fibonacci_list(number):
+def fibonacci_list(num):
 	lista = [0,1]
 
-	while len(lista) <= number:
+	while len(lista) <= num:
 		front = len(lista) - 1
-		num = lista[front] + lista[front - 1]
-		lista.append(num)
+		n = lista[front] + lista[front - 1]
+		lista.append(n)
 
 	return lista.pop()
 
@@ -16,12 +16,12 @@ def fibonice(num, value = 1, prev = 0):
 
 	return fibonice(num-1, value+prev, value)
 
-def fibo_recur(number):
+def fibo_recur(num):
 
-	if number <= 1:
-		return number
+	if num <= 1:
+		return num
 
-	return fibo_recur(number-1) + fibo_recur(number-2)
+	return fibo_recur(num-1) + fibo_recur(num-2)
 
 
 n = 35
