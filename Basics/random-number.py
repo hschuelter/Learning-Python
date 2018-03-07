@@ -1,4 +1,4 @@
-#python random-number.py -p1 'P1' -p2 'P2'
+#python random-number.py -p1 'P1' -p2 'P2' -t 10000
 import random
 import argparse
 
