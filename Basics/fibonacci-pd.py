@@ -24,8 +24,8 @@ def fibo_recur(number):
 	return fibo_recur(number-1) + fibo_recur(number-2)
 
 
-
+n = 35
 print "Calculating the n-th number of Fibonacci sequence:"
-print "    1 - with lists:\t" + str( fibonacci_list(35) )
-print "    2 - with recursion: " + str( fibonice(35,1,0) ) + " (faster)"
-print "    3 - with recursion: " + str( fibo_recur(35) ) + " (slower)"
+print "    1 - with lists:\t" + str( fibonacci_list(n) )
+print "    2 - with recursion: " + str( fibonice(n,1,0) ) + " (faster)"
+print "    3 - with recursion: " + str( fibo_recur(n) ) + " (slower)"
