@@ -62,13 +62,13 @@ def noiseMoore(img, number):
 def _main():
 	number = 1000
 
-	img = cv2.imread('Images/lena.jpg',0)
+	img = cv2.imread('images/lena.jpg',0)
 	img = cv2.copyMakeBorder(img, 1,1,1,1, cv2.BORDER_CONSTANT, -1)
 
-	imgVN = cv2.imread('Images/lena.jpg',0)
+	imgVN = cv2.imread('images/lena.jpg',0)
 	imgVN = cv2.copyMakeBorder(imgVN, 1,1,1,1, cv2.BORDER_CONSTANT, -1)
 
-	imgM = cv2.imread('Images/lena.jpg',0)
+	imgM = cv2.imread('images/lena.jpg',0)
 	imgM = cv2.copyMakeBorder(imgM, 1,1,1,1, cv2.BORDER_CONSTANT, -1)
 
 	imgVN = noiseVonNeumann(imgVN, number)
