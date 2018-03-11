@@ -75,7 +75,7 @@ def _main():
 	imgM  = noiseMoore(imgM, number)
 
 
-	cv2.imshow('Original', img)
+	cv2.imshow('Original image', img)
 	cv2.imshow('Von Neumann', imgVN)
 	cv2.imshow('Moore', imgM)
 	cv2.waitKey(0)
