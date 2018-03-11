@@ -76,8 +76,8 @@ def _main():
 
 
 	cv2.imshow('Original', img)
-	cv2.imshow('Noise VNeu', imgVN)
-	cv2.imshow('Noise Moore', imgM)
+	cv2.imshow('Von Neumann', imgVN)
+	cv2.imshow('Moore', imgM)
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 
