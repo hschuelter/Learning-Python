@@ -49,8 +49,8 @@ def dotCounter(img, color):
 
 	
 
-borderless = cv2.imread('imagens/ruidoBin.png',0)
-img = cv2.copyMakeBorder(borderless, 1,1,1,1, cv2.BORDER_CONSTANT, -1)
+img = cv2.imread('imagens/ruidoBin.png',0)
+img = cv2.copyMakeBorder(img, 1,1,1,1, cv2.BORDER_CONSTANT, -1)
 
 black4, black8 =  dotCounter(img, 0)
 white4, white8 =  dotCounter(img, 255)
