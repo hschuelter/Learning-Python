@@ -1,3 +1,5 @@
+import os
+import db_pokemon as dpoke
 class Move:
 
 	def __init__(self, name = '-', effect = '-', base_power = 0, accuracy = 0, total_PP = 0, category = '-', typing = 18, modifier = '-'):
@@ -39,8 +41,6 @@ class Move:
 
 	# -----------------------------------------------
 
-
-
 	def moveInfo(self):
 
 		os.system('clear')
@@ -52,8 +52,8 @@ class Move:
 		
 		print self.name
 		print '+---------------+---------------+'
-		print '|  TYPE:\t|     ' + typelist[self.typing] + '\t|'
-		print '|  CATEGORY:\t|    ' + category[self.category] + '\t|'
+		print '|  TYPE:\t|     ' + dpoke.typelist[self.typing] + '\t|'
+		print '|  CATEGORY:\t|    ' + dpoke.category[self.category] + '\t|'
 		print '|  POWER:\t|\t' + str(self.base_power) + '\t|'
 		print '|  ACCURACY:\t|      ' + str(self.accuracy) + '\t|' 
 		print '|  PP:\t\t|     ' + str(self.current_PP) + '/' + str(self.total_PP) + '\t|' 

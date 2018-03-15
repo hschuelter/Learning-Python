@@ -1,27 +1,8 @@
 import random as ran
 import os
-from mylib import move.Move
-from mylib import pokemon.Pokemon
-
-
-typelist = 	['NORMAL', 'FIGHTING', 'FLYING', 'POISON',  	# [0  ~  3]
-			 'GROUND', 'ROCK', 'BUG', 'GHOST', 'STEEL', 	# [4  ~  8]
-			 'FIRE', 'WATER', 'GRASS', 'ELECTRIC',			# [9  ~ 12]
-			 'PSYCHIC', 'ICE', 'DRAGON', 'DARK', 'FAIRY',	# [13 ~ 17]
-			 'NULL']										# [   18  ]
-
-nature= ['Quirky', 'Lonely', 'Brave', 'Adamant', 'Naughty',	# [0  ~  4]
-		 'Bold', 'Docile', 'Relaxed', 'Impish', 'Lax',		# [5  ~  9]
-		 'Timid', 'Hasty', 'Serious', 'Jolly', 'Naive', 	# [10 ~ 14]
-		 'Modest', 'Mild', 'Quiet', 'Bashful', 'Rash', 		# [15 ~ 19]
-		 'Calm', 'Gentle', 'Sassy', 'Careful', 'Quirky',	# [20 ~ 24]
-		 'NATURELESS']										# [   25  ]
-
-category= ['PHYSICAL', 'SPECIAL', 'OTHER']
-
-def Status(Pokemon):
-	os.system('clear')
-	Pokemon.printStats()
+import db_pokemon as dpoke
+from Pokemon import Pokemon
+from Move import Move
 
 def MoveInfo(Pokemon):
 	os.system('clear')
@@ -36,12 +17,10 @@ def MoveInfo(Pokemon):
 	else:
 		print 'Errou!'
 
+
 def initializeGame():
 	moves = []
 	pokemon = []
-
-	worker = Move()
-	worker.moveInfo()
 
 	moves.append( Move('Tackle', 'No additional effect.', 40, 100, 35, 0, 0, 1) )
 	moves.append( Move('Scratch', 'No additional effect.', 40, 100, 35, 0, 0, 1) )
@@ -73,7 +52,7 @@ def listAllMoves(Moves):
 	print 'All moves:\n'
 
 	for i in range(0, len(Moves) ):
-		print '  ' + str(i+1) + ') ' + Moves[i].getName() + '\t[' + typelist[Moves[i].getTyping()] +  ']  '
+		print '  ' + str(i+1) + ') ' + Moves[i].getName() + '\t[' + dpoke.typelist[Moves[i].getTyping()] +  ']  '
 
 
 	print '\nSelect a move:'
@@ -104,11 +83,12 @@ def devMenu(Pokemon, Moves):
 	print '\t2) See the Pokemon\'s moves'
 
 	if option == 1:
-			Status(p1)
-		elif option == 2:
-			MoveInfo(p1)
-		elif option == 3:
-			listAllMoves(moves)
+		os.system('clear')
+		Pokemon.printStats()
+	elif option == 2:
+		MoveInfo(p1)
+	elif option == 3:
+		listAllMoves(moves)
 
 	'''
 	while(option != 0):
@@ -116,7 +96,7 @@ def devMenu(Pokemon, Moves):
 
 		print '\t1) List all available Pokemon'
 		print '\t2) List all available moves'	
-		print '\t?) To exit'
+		print '\t0) To exit'
 
 		print 'Choice:',
 		option = input()
@@ -152,7 +132,7 @@ def main():
 
 		print '\t1) Go to dev menu'
 		print '\t2) Play the game'		
-		print '\t?) To exit'
+		print '\t0) To exit'
 		
 		print 'Choice:',
 		option = input()

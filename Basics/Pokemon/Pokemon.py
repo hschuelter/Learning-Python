@@ -1,3 +1,6 @@
+import random as ran
+import db_pokemon as dpoke
+
 class Pokemon:
 
 	def __init__(self, nickname, species, typing1, typing2 = 18):
@@ -14,13 +17,6 @@ class Pokemon:
 		self.shiny = (ran.randint(1,8192) / 8192)
 
 		self.moves = []
-
-		'''
-		self.moves.append( Move('Tackle', 'No effect', 40, 100, 35, 0, 0, 1) )
-		self.moves.append( Move('Growl', 'Lowers opponent\'s Attack by one stage.', 0 , 100, 40, 1, 0, 0) )
-		self.moves.append( Move() )
-		self.moves.append( Move() )
-		'''
 
 	# -----------------------------------------------
 	# Getters:	
@@ -46,7 +42,7 @@ class Pokemon:
 			print typelist[ self.typing[i] ] + '  ',
 
 		print ''
-		print 'Nature: ' + nature[self.nature]
+		print 'Nature: ' + dpoke.nature[self.nature]
 
 		self.printMoves()
 
@@ -58,7 +54,7 @@ class Pokemon:
 		print 'Type: ',
 		for i in range (0, len(self.typing) ):
 			if self.typing[i] != 18:
-				print '| ' + typelist[ self.typing[i] ],
+				print '| ' + dpoke.typelist[ self.typing[i] ],
 
 		print '|'
 		self.printMoves()
@@ -69,7 +65,7 @@ class Pokemon:
 
 		for move in range(0, len(self.moves) ):
 			if self.moves[move].name != '-':
-				print '  ' + str(move+1) + ') ' + self.moves[move].name + '\t' + str(self.moves[move].current_PP) + '/' + str(self.moves[move].total_PP) + '\t[' + typelist[self.moves[move].typing] +  ']  '
+				print '  ' + str(move+1) + ') ' + self.moves[move].name + '\t' + str(self.moves[move].current_PP) + '/' + str(self.moves[move].total_PP) + '\t[' + dpoke.typelist[self.moves[move].typing] +  ']  '
 			else:
 				print '  ' + str(move+1) + ') ' + '  -'
 
