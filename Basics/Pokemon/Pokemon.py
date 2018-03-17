@@ -1,5 +1,5 @@
 import random as ran
-import db_pokemon as dpoke
+import copy
 
 class Pokemon:
 
@@ -18,64 +18,43 @@ class Pokemon:
 
 		self.moves = []
 
+
+	def setStats(self, hp, attack, defense, sp_attack, sp_defense, speed):
+		self.hp = hp
+		self.attack = attack
+		self.defense = defense
+		self.sp_attack = sp_attack
+		self.sp_defense = sp_defense
+		self.speed = speed
+
 	# -----------------------------------------------
 	# Getters:	
 	def getMove(self, position):
 		if position > 0 and position <= len(self.moves):
 			return self.moves[position-1]
 		else:
-			print 'Invalid move!'
+			print ('Invalid move!')
 			return Move()
 			
 	# -----------------------------------------------
 
-	def printStats(self):
+	
+	def printSimpleStats(self):
 		if self.shiny == 0:
-			print self.nickname  + ' (' + self.species + ')'
+			print (self.nickname  + ' (' + self.species + ')'), 
 		else:
-			print self.nickname  + ' (' + self.species + ') *'
+			print (self.nickname  + ' (' + self.species + ') *'), 
 
-		print 'Level:  ' + str(self.level)
-
-		print 'Type:   ',
-		for i in range (0, len(self.typing) ):
-			print typelist[ self.typing[i] ] + '  ',
-
-		print ''
-		print 'Nature: ' + dpoke.nature[self.nature]
-
-		self.printMoves()
-
-	def printGenericStats(self):
-
-		print self.nickname  + ' (' + self.species + ')'
-		print 'Level:  ' + str(self.level)
-
-		print 'Type: ',
-		for i in range (0, len(self.typing) ):
-			if self.typing[i] != 18:
-				print '| ' + dpoke.typelist[ self.typing[i] ],
-
-		print '|'
-		self.printMoves()
-
-
-	def printMoves(self):
-		print 'Moves:'
-
-		for move in range(0, len(self.moves) ):
-			if self.moves[move].name != '-':
-				print '  ' + str(move+1) + ') ' + self.moves[move].name + '\t' + str(self.moves[move].current_PP) + '/' + str(self.moves[move].total_PP) + '\t[' + dpoke.typelist[self.moves[move].typing] +  ']  '
-			else:
-				print '  ' + str(move+1) + ') ' + '  -'
+		print ('Level:  ' + str(self.level) )
+	
 
 	def learnMove(self, move):
 		if len(self.moves) < 4:
 			self.moves.append(move)
 
 		else:
-			print 'Your Pokemon can\'t learn more than four moves...'
-			print 'Choose one to forget:'
+			print ('Your Pokemon can\'t learn more than four moves...')
+			print ('Choose one to forget:')
 
 			self.printMoves()
 
@@ -91,3 +70,4 @@ class Pokemon:
 	def catchPokemon(self):
 		poke = copy.deepcopy(self)
 		return poke
+
