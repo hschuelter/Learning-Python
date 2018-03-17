@@ -169,13 +169,19 @@ def createPlayer():
 	speed = 0.1
 
 	os.system('clear')
-	print_slow('Welcome to the world of Pokemon!\n')
+	print_slow('Good morning!\n')
 	time.sleep(1)
-	print_slow('I am Professor Oak, ')
+	print_slow('My name is Professor Oak.\n')
 	time.sleep(1)
-	print_slow('I will help you in your journey!\n')
+	print_slow('But everyone calls me the Pokemon Professor.\n')
 	time.sleep(1)
-	print_slow('Please,')
+	print_slow('This world is widely inhabited by creatures known as Pokemon.\n')
+	time.sleep(1)
+	print_slow('Now, ')
+	time.sleep(1)
+	print_slow('why don\'t you tell me a little about yourself?\n')
+	time.sleep(1)
+	print_slow('\nPlease,')
 	time.sleep(1)
 	print_slow(' tell me your name: '),
 	name = raw_input()
@@ -187,9 +193,9 @@ def createPlayer():
 	gender = 0
 	while(gender != 1 and gender != 2 and gender != 3):
 		os.system('clear')
-		print_slow('Are you a boy, ', speed)
+		print_slow('Are you a boy?\n', speed)
 		time.sleep(1)
-		print_slow('or are you a girl?\n', speed)
+		print_slow('Or are you a girl?\n', speed)
 
 		print('  1) Boy')
 		print('  2) Girl')
@@ -201,15 +207,14 @@ def createPlayer():
 	player = Player(name, gender)
 
 	os.system('clear')
-	print_slow('Your adventure is about to begin')
+	print_slow('Your very own tale of grand adventure is about to unfold.\n')
 	time.sleep(1)
-	print_slow('.')
+	print_slow('Dreams! ')
 	time.sleep(1)
-	print_slow('.')
+	print_slow('Adventure! ')
 	time.sleep(1)
-	print_slow('.')
-	time.sleep(1)
-
+	print_slow('Let\'s go to the world of Pokemon!')
+	time.sleep(4)
 	return player
 
 
