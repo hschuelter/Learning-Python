@@ -1,6 +1,7 @@
-from Pokemon import Pokemon
 import random as ran
 import os
+#
+#from Pokemon import Pokemon
 
 genderlist = ['BOY', 'GIRL', 'OTHER'] #Polemic
 
@@ -20,6 +21,16 @@ class Player:
 		print('Player: ' + self.name)
 		print('Trainer ID: ' + str(self.trainer_id) )
 		print('')
+		
+		for i in range(0, len(self.PokemonList) ):
+			print( str(i+1) + ')'),
+			self.PokemonList[i].printSimpleStats()
+
+		print('')
+
+	def teamPokemon(self):
+		os.system('clear')
+		print('Your team:')
 		
 		for i in range(0, len(self.PokemonList) ):
 			print( str(i+1) + ')'),

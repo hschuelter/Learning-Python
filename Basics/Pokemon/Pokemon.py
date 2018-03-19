@@ -1,5 +1,7 @@
 import random as ran
 import copy
+##
+from Player import Player
 
 class Pokemon:
 
@@ -21,6 +23,8 @@ class Pokemon:
 
 	def setStats(self, hp, attack, defense, sp_attack, sp_defense, speed):
 		self.hp = hp
+		self.current_hp = hp
+
 		self.attack = attack
 		self.defense = defense
 		self.sp_attack = sp_attack
@@ -46,6 +50,39 @@ class Pokemon:
 			print (self.nickname  + ' (' + self.species + ') *'), 
 
 		print ('Level:  ' + str(self.level) )
+
+	def printBattleStats(self):
+		if self.shiny == 0:
+			print (self.nickname  + ' (' + self.species + ')'), 
+		else:
+			print (self.nickname  + ' (' + self.species + ') *'), 
+
+		print ('Level:  ' + str(self.level) )
+
+		print('HP:\t' + str(self.current_hp) + '/' + str(self.hp))
+
+
+	def printGenericBaseStats(self):
+		print('\nBase Stats:')
+		print('HP:\t' + str(self.hp))
+		print('ATK:\t' + str(self.attack))
+		print('DEF:\t' + str(self.defense))
+		print('SP.ATK:\t' + str(self.sp_attack))
+		print('SP.DEF:\t' + str(self.sp_defense))
+		print('SPEED:\t' + str(self.speed))
+
+		print('--\n')
+
+	def printPokeBaseStats(self):
+		print('\nBase Stats:')
+		print('HP:\t' + str(self.current_hp) + '/' + str(self.hp))
+		print('ATK:\t' + str(self.attack))
+		print('DEF:\t' + str(self.defense))
+		print('SP.ATK:\t' + str(self.sp_attack))
+		print('SP.DEF:\t' + str(self.sp_defense))
+		print('SPEED:\t' + str(self.speed))
+
+		print('--\n')
 	
 
 	def learnMove(self, move):
@@ -70,4 +107,7 @@ class Pokemon:
 	def catchPokemon(self):
 		poke = copy.deepcopy(self)
 		return poke
+
+	def addOT(self, player):
+		self.trainer_ot = player.trainer_id
 
