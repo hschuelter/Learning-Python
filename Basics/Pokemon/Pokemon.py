@@ -1,7 +1,9 @@
 import random as ran
 import copy
+import time
 ##
 from Player import Player
+from Move import Move
 
 class Pokemon:
 
@@ -111,3 +113,23 @@ class Pokemon:
 	def addOT(self, player):
 		self.trainer_ot = player.trainer_id
 
+	def useMove(self, move, pokemon):
+		damage = move.base_power // 4
+		accuracy = move.accuracy
+
+		move.current_PP -= 1
+
+		print(self.nickname + ' used ' + move.name)
+		print('Damage: ' + str(damage))
+		print('Accuracy: ' + str(accuracy))
+
+		luck = ran.randint(0,100)
+		if luck < accuracy:
+			pokemon.current_hp -= damage
+		else:
+			print('But, it missed...')
+
+		if move.category == 2:
+			print(move.effect)
+
+		time.sleep(2)

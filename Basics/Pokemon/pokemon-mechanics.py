@@ -165,7 +165,7 @@ def listTeamPokemon(player):
 
 def createPlayer():
 	speed = 0.1
-
+	'''
 	os.system('clear')
 	print_slow('Good morning!\n')
 	time.sleep(1)
@@ -179,6 +179,7 @@ def createPlayer():
 	time.sleep(1)
 	print_slow('why don\'t you tell me a little about yourself?\n')
 	time.sleep(1)
+	'''
 	print_slow('\nPlease,')
 	time.sleep(1)
 	print_slow(' tell me your name: '),
@@ -221,6 +222,8 @@ def getYourFirstPokemon(player, pokemon):
 	print_slow('You can choose between three Pokemon:\n')
 	time.sleep(1)
 
+	'''
+
 	print_slow('\nBulbasaur, the Seed Pokemon,\n')
 	time.sleep(1)
 	print_slow('It likes to take naps on bright sunlight!\n')
@@ -235,6 +238,7 @@ def getYourFirstPokemon(player, pokemon):
 	time.sleep(1)
 	print_slow('The shells rounded shape helps minimize resistance in water, enabling it to swim at high speeds!\n')
 	time.sleep(3)
+	'''
 
 
 	choice = 0
@@ -309,16 +313,37 @@ def battleStart(player, rival):
 		opt = input()
 
 		if opt == 1:
-			printMoves(battle.poke_p1)
-			battle.plusTurn()
-			opt = -1
+			mov = 0
+			while(mov == 0):
+				os.system('clear')
+
+				battle.round()
+				print ('\n----------\n')
+
+				printMoves(battle.poke_p1)
+				print('Select a move:'),
+				mov = input()
+
+				if mov <= 0 or mov > len(battle.poke_p1.moves):
+					print('Invalid move!')
+				else:
+					battle.poke_p1.useMove(battle.poke_p1.moves[mov-1], battle.poke_p2)
+					battle.plusTurn()
 
 		elif opt == 2:
 			print ('You can\'t run from a trainer battle...')
+			time.sleep(1)
 
 		else:
 			opt = 0
 
+
+		if battle.poke_p1.current_hp == 0:
+			return rival
+
+		elif battle.poke_p2.current_hp == 0:
+			return player
+ 
 	time.sleep(2)
 
 
@@ -376,7 +401,18 @@ def gameMenu(Pokemon, Moves):
 				blue = getYourFirstPokemon(player, Pokemon)
 				starter += 1
 			else:
-				battleStart(player, blue)
+				winner = battleStart(player, blue)
+
+				if winner.trainer_id == player.trainer_id:
+					print_slow('Congratulations, you beat the game!!')
+				else:
+					print_slow('Don\'t give up! You can beat Blue!')
+
+				time.sleep(1)
+					
+				option = 0
+
+
 
 		elif option == 2:
 			player.playerStats()
