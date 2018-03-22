@@ -7,7 +7,7 @@ genderlist = ['BOY', 'GIRL', 'OTHER'] #Polemic
 
 class Player:
 
-	def __init__(self, name = 'Red', gender = 1, ):
+	def __init__(self, name = 'Red', gender = 1 ):
 		self.name = name
 		self.trainer_id = ran.randint(0,65535)
 		self.gender = gender - 1
@@ -16,10 +16,13 @@ class Player:
 		self.PokemonBox = [] 
 		self.Badges = []
 
+		if name == 'Blue':
+			self.trainer_id = 1
+
 	def playerStats(self):
 		os.system('clear')
 		print('Player: ' + self.name)
-		print('Trainer ID: ' + str(self.trainer_id) )
+		print('Trainer ID: ' + str(self.trainer_id).zfill(5) )
 		print('')
 		
 		for i in range(0, len(self.PokemonList) ):

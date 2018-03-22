@@ -17,14 +17,17 @@ class Battle:
 		self.turn = 0
 
 	def round(self):
+		os.system('clear')
 		print('Turn: ' + str(self.turn) )
-		print('--------------------\n')
+		print('==========\n')
 
 		self.poke_p2.printBattleStats()
 
-		print ('\n----------\n')
+		print ('\n==========\n')
 
 		self.poke_p1.printBattleStats()
+
+		print ('\n==========\n')
 
 	def plusTurn(self):
 		self.turn += 1

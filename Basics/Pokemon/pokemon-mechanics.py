@@ -318,7 +318,6 @@ def battleStart(player, rival):
 				os.system('clear')
 
 				battle.round()
-				print ('\n----------\n')
 
 				printMoves(battle.poke_p1)
 				print('Select a move:'),
@@ -327,7 +326,73 @@ def battleStart(player, rival):
 				if mov <= 0 or mov > len(battle.poke_p1.moves):
 					print('Invalid move!')
 				else:
-					battle.poke_p1.useMove(battle.poke_p1.moves[mov-1], battle.poke_p2)
+					move1 = battle.poke_p1.moves[mov-1]
+					moveR = battle.poke_p2.moves[ran.randint(0, len(battle.poke_p2.moves) - 1) ]
+
+					if battle.poke_p1.speed > battle.poke_p2.speed: # PLAYER IS FASTER
+						battle.poke_p1.useMove(move1, battle.poke_p2, battle)
+						
+						time.sleep(3)
+						if battle.poke_p2.current_hp <= 0:
+							print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
+							return player
+
+						battle.poke_p2.useMove(moveR, battle.poke_p1, battle)						
+						time.sleep(3)
+						if battle.poke_p1.current_hp <= 0:
+							print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
+							return rival
+
+					elif battle.poke_p1.speed < battle.poke_p2.speed:
+						battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
+						
+						time.sleep(3)
+						if battle.poke_p1.current_hp <= 0:
+							print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
+							return rival
+
+
+						battle.poke_p1.useMove(move1, battle.poke_p2, battle)
+						
+						time.sleep(3)
+						if battle.poke_p2.current_hp <= 0:
+							print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
+							return player
+
+					else:
+						luck = ran.randint(0,10)
+						if (luck % 2) == 0: # PLAYER
+							battle.poke_p1.useMove(move1, battle.poke_p2, battle)
+						
+							time.sleep(3)
+							if battle.poke_p2.current_hp <= 0:
+								print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
+								return player
+
+							battle.poke_p2.useMove(moveR, battle.poke_p1, battle)						
+							time.sleep(3)
+							if battle.poke_p1.current_hp <= 0:
+								print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
+								return rival
+						
+						else: # RIVAL
+							battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
+						
+							time.sleep(3)
+							if battle.poke_p1.current_hp <= 0:
+								print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
+								return rival
+
+
+							battle.poke_p1.useMove(move1, battle.poke_p2, battle)
+							
+							time.sleep(3)
+							if battle.poke_p2.current_hp <= 0:
+								print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
+							
+
+
+					time.sleep(3)
 					battle.plusTurn()
 
 		elif opt == 2:
@@ -336,13 +401,6 @@ def battleStart(player, rival):
 
 		else:
 			opt = 0
-
-
-		if battle.poke_p1.current_hp == 0:
-			return rival
-
-		elif battle.poke_p2.current_hp == 0:
-			return player
  
 	time.sleep(2)
 
@@ -406,7 +464,14 @@ def gameMenu(Pokemon, Moves):
 				if winner.trainer_id == player.trainer_id:
 					print_slow('Congratulations, you beat the game!!')
 				else:
+					os.system('clear')
+					print_slow(player.name + ' is out of usable Pokemon\n')
+					print_slow(player.name + ' lost all hope\n')
+					time.sleep(3)
+					os.system('clear')
 					print_slow('Don\'t give up! You can beat Blue!')
+					time.sleep(2)
+					os.system('clear')
 
 				time.sleep(1)
 					

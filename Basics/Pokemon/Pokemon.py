@@ -1,6 +1,7 @@
 import random as ran
 import copy
 import time
+import os
 ##
 from Player import Player
 from Move import Move
@@ -113,23 +114,39 @@ class Pokemon:
 	def addOT(self, player):
 		self.trainer_ot = player.trainer_id
 
-	def useMove(self, move, pokemon):
+	def useMove(self, move, pokemon, battle):
 		damage = move.base_power // 4
 		accuracy = move.accuracy
 
-		move.current_PP -= 1
-
-		print(self.nickname + ' used ' + move.name)
-		print('Damage: ' + str(damage))
-		print('Accuracy: ' + str(accuracy))
-
 		luck = ran.randint(0,100)
-		if luck < accuracy:
+		move.current_PP -= 1
+		miss = 0
+
+
+		if luck <= accuracy:
+			miss = 0
 			pokemon.current_hp -= damage
 		else:
+			miss = 1
+
+		battle.round()
+
+		print(self.nickname + ' used ' + move.name)
+
+		print('Luck: ' + str(luck))
+		print('Accuracy: ' + str(accuracy))
+		print('Damage: ' + str(damage))
+		print('')
+
+		if miss == 1:			
 			print('But, it missed...')
+
 
 		if move.category == 2:
 			print(move.effect)
 
-		time.sleep(2)
+		time.sleep(1)
+
+	def calculateDamage(self, move):
+		damage = 0
+		return damage
