@@ -204,7 +204,7 @@ def createPlayer():
 		speed = 0.05
 
 	player = Player(name, gender)
-
+	'''
 	os.system('clear')
 	print_slow('Your very own tale of grand adventure is about to unfold.\n')
 	time.sleep(1)
@@ -214,6 +214,7 @@ def createPlayer():
 	time.sleep(1)
 	print_slow('Let\'s go to the world of Pokemon!')
 	time.sleep(4)
+	'''
 	return player
 
 

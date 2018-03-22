@@ -14,6 +14,8 @@ class Battle:
 		self.p2 = p2
 		self.poke_p2 = p2.PokemonList[0]
 
+		self.weather = 1
+
 		self.turn = 0
 
 	def round(self):

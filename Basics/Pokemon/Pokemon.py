@@ -115,7 +115,9 @@ class Pokemon:
 		self.trainer_ot = player.trainer_id
 
 	def useMove(self, move, pokemon, battle):
-		damage = move.base_power // 4
+
+		damage = self.calculateDamage(move, pokemon, battle)
+
 		accuracy = move.accuracy
 
 		luck = ran.randint(0,100)
@@ -147,6 +149,23 @@ class Pokemon:
 
 		time.sleep(1)
 
-	def calculateDamage(self, move):
-		damage = 0
+	def calculateDamage(self, move, target, battle):
+		# Physical
+		if move.category == 0: 
+			a = self.attack
+			d = target.defense
+		
+		# Special
+		elif move.category == 1:
+			a = self.sp_attack
+			d = target.sp_defense
+		
+		#Other
+		else:
+			return 0
+
+		modifier = 1
+		damage = ( ( ( ( ( (2 * self.level)/5) + 2) * move.base_power * (a/d) )/ 50.0 ) + 2 ) * modifier
+		damage = int(damage) 
+
 		return damage
