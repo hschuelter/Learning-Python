@@ -114,9 +114,10 @@ class Pokemon:
 	def addOT(self, player):
 		self.trainer_ot = player.trainer_id
 
-	def useMove(self, move, pokemon, battle):
+	def useMove(self, move, target, battle):
+		crit = 0
 
-		damage = self.calculateDamage(move, pokemon, battle)
+		damage, crit = self.calculateDamage(move, target, battle)
 
 		accuracy = move.accuracy
 
@@ -127,15 +128,19 @@ class Pokemon:
 
 		if luck <= accuracy:
 			miss = 0
-			pokemon.current_hp -= damage
+			target.current_hp -= damage
+			if target.current_hp < 0:
+				target.current_hp = 0 
 		else:
 			miss = 1
 
 		battle.round()
 
 		print(self.nickname + ' used ' + move.name)
+		if crit == 1 and move.category != 2:
+			print('It was a critical hit!')
 
-		print('Luck: ' + str(luck))
+		#print('Luck: ' + str(luck))
 		print('Accuracy: ' + str(accuracy))
 		print('Damage: ' + str(damage))
 		print('')
@@ -149,7 +154,29 @@ class Pokemon:
 
 		time.sleep(1)
 
+	def calculateModifier(self, move, target, battle):
+		weather = battle.weather
+		stab = 1
+		typing = 1
+		rdm = ran.randint(85,100) / 100.0
+		crit = 0
+
+		if self.typing[0] == move.typing or self.typing[1] == move.typing:
+			stab = 1.5
+
+		#typing = typing * effect(target.typing[0], move.typing) * effect(target.typing[1], move.typing)
+		
+		#crit, random
+
+		if (ran.randint(1,96) % 16) == 0:
+			crit = 1 
+
+		mod = weather * stab * typing * rdm * (crit + 1)
+
+		return mod, crit
+
 	def calculateDamage(self, move, target, battle):
+		
 		# Physical
 		if move.category == 0: 
 			a = self.attack
@@ -162,10 +189,10 @@ class Pokemon:
 		
 		#Other
 		else:
-			return 0
+			return 0, 0
 
-		modifier = 1
-		damage = ( ( ( ( ( (2 * self.level)/5) + 2) * move.base_power * (a/d) )/ 50.0 ) + 2 ) * modifier
+		modifier, crit = self.calculateModifier(move, target, battle)
+		damage = ( ( ( ( ( (2 * self.level)/5.0) + 2) * move.base_power * (a/ (d * 1.0) ) )/ 50.0 ) + 2 ) * modifier
 		damage = int(damage) 
 
-		return damage
+		return damage, crit

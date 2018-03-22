@@ -25,6 +25,14 @@ nature= ['Quirky', 'Lonely', 'Brave', 'Adamant', 'Naughty',	# [0  ~  4]
 category= ['PHYSICAL', 'SPECIAL', ' OTHER']
 
 
+#GAIN |Lose: attack | defense | sp attack | sp defense | speed
+attack =    ['     ', '      ', 'Adamant', ]
+defense= []
+sp_atk = []
+sp_def = []
+speed  =    ['Timid', 'Hasty', 'Jolly', 'Naive'] 
+
+
 def print_slow(string, speed = 0.08):
 	for letter in string:
 		sys.stdout.write(letter)
@@ -99,7 +107,7 @@ def printGenericStats(Pokemon):
 def printPokeStats(Pokemon):	
 	os.system('clear')
 	Pokemon.printSimpleStats()
-	print ('OT: ' + str(Pokemon.trainer_ot))
+	print ('OT: ' + str(Pokemon.trainer_ot).zfill(5))
 	print ('Nature: ' + nature[Pokemon.nature])
 	Pokemon.printPokeBaseStats()
 	printMoves(Pokemon)
