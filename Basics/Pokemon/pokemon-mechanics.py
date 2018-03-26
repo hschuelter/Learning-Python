@@ -25,12 +25,15 @@ nature= ['Quirky', 'Lonely', 'Brave', 'Adamant', 'Naughty',	# [0  ~  4]
 category= ['PHYSICAL', 'SPECIAL', ' OTHER']
 
 
-#GAIN |Lose: attack | defense | sp attack | sp defense | speed
-attack =    ['     ', '      ', 'Adamant', ]
-defense= []
-sp_atk = []
-sp_def = []
-speed  =    ['Timid', 'Hasty', 'Jolly', 'Naive'] 
+#GAIN |Lose:  attack | defense | spc atk | spc def | speed
+attack =    [ 'Hardy', 'Lonely','Adamant','Naughty', 'Brave']
+defense=    [ 'Bold' , 'Docile', 'Impish',  'Lax'  , 'Relaxed']
+sp_atk =    ['Modest', 'Mild'  ,'Serious',  'Rash' , 'Quiet']
+sp_def =    [ 'Calm' , 'Gentle','Careful','Bashful', 'Sassy']
+speed  =    ['Timid' , 'Hasty' , 'Jolly' , 'Naive' , 'Quirky']
+
+natures = [attack, defense, sp_atk, sp_def, speed]
+statName = ['ATTACK', 'DEFENSE', 'SP. ATTACK', 'SP. DEFENSE', 'SPEED']
 
 
 def print_slow(string, speed = 0.08):
@@ -52,17 +55,17 @@ def initializeGame():
 	moves.append( Move('Vine Whip', 'No additional effect.', 45, 100, 25, 0, 11, 1) )
 
 	pokemon.append( Pokemon("BULBASAUR", "Bulbasaur", 11, 3) )
-	pokemon[0].setStats(20, 10, 10, 12, 12, 10)
+	pokemon[0].setStats(21, 11, 11, 13, 13, 11)
 	pokemon[0].learnMove(moves[0]) # Tackle
 	pokemon[0].learnMove(moves[2]) # Growl
 
 	pokemon.append( Pokemon("CHARMANDER", "Charmander", 9) )
-	pokemon[1].setStats(19, 10, 10, 11, 10, 12)
+	pokemon[1].setStats(20, 11, 10, 12, 11, 13)
 	pokemon[1].learnMove(moves[1]) # Sratch
 	pokemon[1].learnMove(moves[2]) # Growl
 
 	pokemon.append( Pokemon("SQUIRTLE", "Squirtle", 10) )
-	pokemon[2].setStats(20, 10, 12, 10, 12, 10)
+	pokemon[2].setStats(20, 11, 13, 11, 12, 10)
 	pokemon[2].learnMove(moves[0]) # Tackle
 	pokemon[2].learnMove(moves[3]) # Tail Whip
 
@@ -108,7 +111,13 @@ def printPokeStats(Pokemon):
 	os.system('clear')
 	Pokemon.printSimpleStats()
 	print ('OT: ' + str(Pokemon.trainer_ot).zfill(5))
-	print ('Nature: ' + nature[Pokemon.nature])
+	print ('Nature: ' + natures[Pokemon.gainStat][Pokemon.loseStat]),
+
+	if Pokemon.loseStat == Pokemon.gainStat:
+		print('(NEUTRAL)')
+	else:
+		print ('(UP: ' + statName[Pokemon.gainStat] + ', DOWN: ' + statName[Pokemon.loseStat] + ')' )
+
 	Pokemon.printPokeBaseStats()
 	printMoves(Pokemon)
 
@@ -297,7 +306,7 @@ def getYourFirstPokemon(player, pokemon):
 	blue.PokemonList.append(rival_starter)
 	
 
-	print('\nBlue picked ' + rival_starter.species)
+	print('Blue picked ' + rival_starter.species)
 	time.sleep(1)
 	print('')
 
@@ -312,8 +321,6 @@ def battleStart(player, rival):
 	while( opt != -1):
 		os.system('clear')
 		battle.round()
-
-		print ('\n----------\n')		
 	
 		print('What will you do?')
 		print('1 - Fight')
@@ -338,7 +345,7 @@ def battleStart(player, rival):
 					move1 = battle.poke_p1.moves[mov-1]
 					moveR = battle.poke_p2.moves[ran.randint(0, len(battle.poke_p2.moves) - 1) ]
 
-					if battle.poke_p1.speed > battle.poke_p2.speed: # PLAYER IS FASTER
+					if battle.poke_p1.stats[5] > battle.poke_p2.stats[5]: # PLAYER IS FASTER
 						battle.poke_p1.useMove(move1, battle.poke_p2, battle)
 						
 						time.sleep(3)
@@ -352,7 +359,7 @@ def battleStart(player, rival):
 							print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
 							return rival
 
-					elif battle.poke_p1.speed < battle.poke_p2.speed:
+					elif battle.poke_p1.stats[5] < battle.poke_p2.stats[5]:
 						battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
 						
 						time.sleep(3)
@@ -443,6 +450,7 @@ def gameMenu(Pokemon, Moves):
 
 	os.system('clear')
 	option = 1
+	win = 0
 	starter = 0
 
 	while (option != 0):
@@ -472,6 +480,7 @@ def gameMenu(Pokemon, Moves):
 
 				if winner.trainer_id == player.trainer_id:
 					print_slow('Congratulations, you beat the game!!')
+					win = 1
 				else:
 					os.system('clear')
 					print_slow(player.name + ' is out of usable Pokemon\n')
@@ -504,11 +513,12 @@ def gameMenu(Pokemon, Moves):
 		else:
 			option = 0
 
-	return
+	return win
 
 def mainMenu():
 	pokemon, moves = initializeGame()
-	option = 1	
+	option = 1
+	win = 0
 
 	while(option != 0):
 		os.system('clear')
@@ -516,6 +526,8 @@ def mainMenu():
 
 		print ('\t1) Go to dev menu')
 		print ('\t2) Play the game')
+		if win == 1:
+			print('\t3) Challenge a strong opponent')
 		print ('\t0) To exit')
 		
 		print ('Choice:'),
@@ -524,7 +536,13 @@ def mainMenu():
 		if option == 1:
 			devMenu(pokemon, moves)
 		elif option == 2:
-			gameMenu(pokemon, moves)
+			win = gameMenu(pokemon, moves)
+		elif option == 3:
+			print_slow( 'You can\'t fight Red ...' )
+			time.sleep(1)
+			print_slow( ' yet', 0.3 )
+			time.sleep(2)
+
 		else:
 			option = 0
 

@@ -17,7 +17,9 @@ class Pokemon:
 		self.typing.append(typing1)
 		self.typing.append(typing2)
 
-		self.nature = ran.randint(0,24)
+		#self.nature = ran.randint(0,24)
+		self.gainStat = ran.randint(0,4)
+		self.loseStat = ran.randint(0,4)
 
 		self.shiny = (ran.randint(1,8192) / 8192)
 
@@ -25,14 +27,38 @@ class Pokemon:
 
 
 	def setStats(self, hp, attack, defense, sp_attack, sp_defense, speed):
-		self.hp = hp
 		self.current_hp = hp
 
-		self.attack = attack
-		self.defense = defense
-		self.sp_attack = sp_attack
-		self.sp_defense = sp_defense
-		self.speed = speed
+		self.stats = []
+		self.stats.append(hp)
+		self.stats.append(attack)
+		self.stats.append(defense)
+		self.stats.append(sp_attack)
+		self.stats.append(sp_defense)
+		self.stats.append(speed)
+
+		# self.hp = hp
+		# self.attack = attack
+		# self.defense = defense
+		# self.sp_attack = sp_attack
+		# self.sp_defense = sp_defense
+		# self.speed = speed
+
+	def updateStats(self):
+
+		gain = self.gainStat
+		loss = self.loseStat
+
+		if gain == loss:
+			return
+
+		self.stats[gain+1] += (self.stats[gain+1])//10
+
+		self.stats[loss+1] = int( (self.stats[loss+1]) - (self.stats[loss+1])/10.0 ) 
+
+
+
+
 
 	# -----------------------------------------------
 	# Getters:	
@@ -62,28 +88,29 @@ class Pokemon:
 
 		print ('Level:  ' + str(self.level) )
 
-		print('HP:\t' + str(self.current_hp) + '/' + str(self.hp))
+		print('HP:\t' + str(self.current_hp) + '/' + str(self.stats[0]))
 
 
 	def printGenericBaseStats(self):
 		print('\nBase Stats:')
-		print('HP:\t' + str(self.hp))
-		print('ATK:\t' + str(self.attack))
-		print('DEF:\t' + str(self.defense))
-		print('SP.ATK:\t' + str(self.sp_attack))
-		print('SP.DEF:\t' + str(self.sp_defense))
-		print('SPEED:\t' + str(self.speed))
+		print('HP:\t' + str(self.stats[0]))
+		print('ATK:\t' + str(self.stats[1]))
+		print('DEF:\t' + str(self.stats[2]))
+		print('SP.ATK:\t' + str(self.stats[3]))
+		print('SP.DEF:\t' + str(self.stats[4]))
+		print('SPEED:\t' + str(self.stats[5]))
 
 		print('--\n')
 
 	def printPokeBaseStats(self):
 		print('\nBase Stats:')
-		print('HP:\t' + str(self.current_hp) + '/' + str(self.hp))
-		print('ATK:\t' + str(self.attack))
-		print('DEF:\t' + str(self.defense))
-		print('SP.ATK:\t' + str(self.sp_attack))
-		print('SP.DEF:\t' + str(self.sp_defense))
-		print('SPEED:\t' + str(self.speed))
+		print('HP:\t' + str(self.current_hp) + '/' + str(self.stats[0]))
+		print('ATK:\t' + str(self.stats[1]))
+		print('DEF:\t' + str(self.stats[2]))
+		print('SP.ATK:\t' + str(self.stats[3]))
+		print('SP.DEF:\t' + str(self.stats[4]))		
+		print('SPEED:\t' + str(self.stats[5]))
+		
 
 		print('--\n')
 	
@@ -109,6 +136,7 @@ class Pokemon:
 
 	def catchPokemon(self):
 		poke = copy.deepcopy(self)
+		poke.updateStats()
 		return poke
 
 	def addOT(self, player):
@@ -179,13 +207,13 @@ class Pokemon:
 		
 		# Physical
 		if move.category == 0: 
-			a = self.attack
-			d = target.defense
+			a = self.stats[1] 	# ATK
+			d = target.stats[2]	# DEF
 		
 		# Special
 		elif move.category == 1:
-			a = self.sp_attack
-			d = target.sp_defense
+			a = self.stats[3]	#SP ATK
+			d = target.stats[4] #SP DEF
 		
 		#Other
 		else:
