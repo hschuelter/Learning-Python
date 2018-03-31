@@ -10,10 +10,16 @@ class Queue:
         return self.items.pop(0)
 
     def size(self):
-        return len()
+        return len(self.items)
 
     def first(self):
         return self.items[0]
 
     def printQueue(self):
         print self.items
+
+    def isEmpty(self):    	
+    	if self.size() == 0:
+    		return True
+    	else:
+    		return False
