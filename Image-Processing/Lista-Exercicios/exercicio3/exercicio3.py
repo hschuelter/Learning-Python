@@ -6,6 +6,7 @@ from Queue import Queue
 positions = [(-1,-1), (0,-1), (1,-1), (-1,0), (1,0), (-1,1), (0,1), (1,1)]
 
 def showImage(label, pos):
+	name = 'componente-' + str(pos) + '.png'
 	img = np.zeros(label.shape, np.uint8)
 
 	for y in range (0, img.shape[0]):
@@ -18,8 +19,8 @@ def showImage(label, pos):
 				img[y][x] *= 255
 
 	cv2.imshow(str(pos), img)
-	
 	cv2.waitKey(0)
+	#cv2.imwrite(name, img)
 
 def findNext(label):
 	for y in range(0,label.shape[0]):
