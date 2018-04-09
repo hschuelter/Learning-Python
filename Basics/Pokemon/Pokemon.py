@@ -5,6 +5,7 @@ import os
 ##
 from Player import Player
 from Move import Move
+import MoveList
 
 class Pokemon:
 
@@ -25,6 +26,23 @@ class Pokemon:
 
 		self.moves = []
 
+		self.statModifier = [0,0,0,0,0,0,0]
+		#statModifier[0] = ATK
+		#statModifier[1] = DEF
+		#statModifier[2] = SP. ATK
+		#statModifier[3] = SP. DEF
+		#statModifier[4] = SPEED
+		#statModifier[5] = EVASION
+		#statModifier[6] = ACCURACCY
+	
+	def addOT(self, player):
+		self.trainer_ot = player.trainer_id
+
+	def changeNickname(self, new_nickname):
+		self.nickname = new_nickname
+
+	def setLevel(self, level):
+		self.level = level
 
 	def setStats(self, hp, attack, defense, sp_attack, sp_defense, speed):
 		self.current_hp = hp
@@ -55,6 +73,11 @@ class Pokemon:
 		self.stats[gain+1] += (self.stats[gain+1])//10
 
 		self.stats[loss+1] = int( (self.stats[loss+1]) - (self.stats[loss+1])/10.0 ) 
+
+	def catchPokemon(self):
+		poke = copy.deepcopy(self)
+		poke.updateStats()
+		return poke
 
 
 
@@ -130,19 +153,16 @@ class Pokemon:
 			self.moves[option-1] = move
 
 
-	def changeNickname(self, new_nickname):
-		self.nickname = new_nickname
 
-
-	def catchPokemon(self):
-		poke = copy.deepcopy(self)
-		poke.updateStats()
-		return poke
-
-	def addOT(self, player):
-		self.trainer_ot = player.trainer_id
+	# BATTLE RELATED: ----------
 
 	def useMove(self, move, target, battle):
+		
+		if move.category == 2:			
+			self.useSupportMove(move, target, battle)
+			battle.round()
+			return
+
 		crit = 0
 
 		damage, crit = self.calculateDamage(move, target, battle)
@@ -207,13 +227,13 @@ class Pokemon:
 		
 		# Physical
 		if move.category == 0: 
-			a = self.stats[1] 	# ATK
-			d = target.stats[2]	# DEF
+			a = self.stats[1] + (self.stats[1] * self.statModifier[0])/2		# ATK
+			d = target.stats[2] + (target.stats[2] * target.statModifier[1])/2	# DEF
 		
 		# Special
 		elif move.category == 1:
-			a = self.stats[3]	#SP ATK
-			d = target.stats[4] #SP DEF
+			a = self.stats[3] + (self.stats[3] * self.statModifier[2])/2	#SP ATK
+			d = target.stats[4] + (self.stats[4] * self.statModifier[3])/2	#SP DEF
 		
 		#Other
 		else:
@@ -221,6 +241,21 @@ class Pokemon:
 
 		modifier, crit = self.calculateModifier(move, target, battle)
 		damage = ( ( ( ( ( (2 * self.level)/5.0) + 2) * move.base_power * (a/ (d * 1.0) ) )/ 50.0 ) + 2 ) * modifier
-		damage = int(damage) 
+		damage = int(damage)
+
+		if damage <= 0:
+			damage = 1
 
 		return damage, crit
+			
+	def useSupportMove(self, move, target, battle):
+		name = move.name
+
+		if name == 'Growl':
+			MoveList.useGrowl(self, target)
+			
+		if name == 'Tail Whip':
+			MoveList.useTailWhip(self, target)
+
+		if name == 'Swords Dance':
+			MoveList.useSwordsDance(self, target)

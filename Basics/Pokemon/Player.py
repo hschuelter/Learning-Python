@@ -18,6 +18,8 @@ class Player:
 
 		if name == 'Blue':
 			self.trainer_id = 1
+		if name == 'Red':
+			self.trainer_id = 0
 
 	def playerStats(self):
 		os.system('clear')
@@ -33,7 +35,7 @@ class Player:
 
 	def teamPokemon(self):
 		os.system('clear')
-		print('Your team:')
+		print(self.name + '\'s team:')
 		
 		for i in range(0, len(self.PokemonList) ):
 			print( str(i+1) + ')'),
