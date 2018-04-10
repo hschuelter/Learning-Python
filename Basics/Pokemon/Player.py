@@ -1,7 +1,8 @@
 import random as ran
+import copy
 import os
 #
-#from Pokemon import Pokemon
+from Pokemon import Pokemon
 
 genderlist = ['BOY', 'GIRL', 'OTHER'] #Polemic
 
@@ -42,3 +43,13 @@ class Player:
 			self.PokemonList[i].printSimpleStats()
 
 		print('')
+
+	def addOT(self, pokemon):
+		pokemon.trainer_ot = self.trainer_id
+
+	def catchPokemon(self, pokemon):
+		poke = copy.deepcopy(pokemon)
+		poke.updateStats()
+		self.addOT(poke)
+
+		self.PokemonList.append(poke)

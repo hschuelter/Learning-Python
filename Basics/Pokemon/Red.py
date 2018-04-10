@@ -34,27 +34,17 @@ def initializeBattle(you, red):
 	pika.learnMove( Move('Thunderbolt ', '-', 90,  100, 15, 1, 12, 1, 0) )
 	pika.learnMove( Move('Volt Tackle ', '-', 120, 100, 15, 0, 12, 1, 0) )
 	pika.learnMove( Move('Iron Tail   ', '-', 100,  75, 15, 0,  8, 1, 0) )
-
-
-
-	red.PokemonList.append( pika )
-	pika.addOT(red)
+	red.catchPokemon(pika)
 
 	red.PokemonList.append( snor )
-	snor.addOT(red)
 
 	red.PokemonList.append( lapr )
-	lapr.addOT(red)
 
 	red.PokemonList.append( venu )
-	venu.addOT(red)
 
 	red.PokemonList.append( char )
-	char.addOT(red)
 
 	red.PokemonList.append( blas )
-	blas.addOT(red)
-
 
 def createPlayer(player):
 	you = Player(player.name, player.gender)

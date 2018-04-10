@@ -14,17 +14,8 @@ typelist = 	['NORMAL', 'FIGHTING', 'FLYING', 'POISON',  	# [0  ~  3]
 			 'FIRE', 'WATER', 'GRASS', 'ELECTRIC',			# [9  ~ 12]
 			 'PSYCHIC', 'ICE', 'DRAGON', 'DARK', 'FAIRY',	# [13 ~ 17]
 			 'NULL']										# [   18  ]
-'''
-nature= ['Quirky', 'Lonely', 'Brave', 'Adamant', 'Naughty',	# [0  ~  4]
-		 'Bold', 'Docile', 'Relaxed', 'Impish', 'Lax',		# [5  ~  9]
-		 'Timid', 'Hasty', 'Serious', 'Jolly', 'Naive', 	# [10 ~ 14]
-		 'Modest', 'Mild', 'Quiet', 'Bashful', 'Rash', 		# [15 ~ 19]
-		 'Calm', 'Gentle', 'Sassy', 'Careful', 'Quirky',	# [20 ~ 24]
-		 'NATURELESS']										# [   25  ]
-'''
 
 category= ['PHYSICAL', 'SPECIAL', ' OTHER']
-
 
 #GAIN |Lose:  attack | defense | spc atk | spc def | speed
 attack =    [ 'Hardy', 'Lonely','Adamant','Naughty', 'Brave']
@@ -274,7 +265,9 @@ def getYourFirstPokemon(player, pokemon):
 		speed = 0.05
 
 	choice -= 1
-	starter = pokemon[choice].catchPokemon()
+
+	starter = pokemon[choice]
+	player.catchPokemon(starter)
 
 	os.system('clear')
 	print_slow('I see, you chose ')
@@ -285,9 +278,7 @@ def getYourFirstPokemon(player, pokemon):
 	print_slow('Please, choose a nickname for your Pokemon: '),
 
 	nickname = raw_input()
-	starter.changeNickname(nickname)
-	starter.addOT(player)
-	player.PokemonList.append(starter)
+	player.PokemonList[0].changeNickname(nickname)
 
 	os.system('clear')
 	blue_speed = 0.03
@@ -302,13 +293,11 @@ def getYourFirstPokemon(player, pokemon):
 	time.sleep(1.5)
 	os.system('clear')
 
-	rival_starter = pokemon[(choice+1)%3].catchPokemon()
 	blue = Player('Blue', 1)
-	rival_starter.addOT(blue)
-	blue.PokemonList.append(rival_starter)
+	blue.catchPokemon(pokemon[(choice+1)%3])
 	
 
-	print('Blue picked ' + rival_starter.species)
+	print('Blue picked ' + blue.PokemonList[0].species)
 	time.sleep(1)
 
 	return blue

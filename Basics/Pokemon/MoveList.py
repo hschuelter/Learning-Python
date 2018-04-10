@@ -1,12 +1,11 @@
 import time
 ##
-from Battle import Battle
-from Player import Player
 from Move import Move
 
 
 def useGrowl(user, target):
 	if target.statModifier[0] == -6:
+		print('')
 		print(user.nickname + ' used Growl!')
 		time.sleep(0.5)
 		print(user.nickname + '\' ATTACK won\'t go any lower!')

@@ -1,9 +1,7 @@
 import random as ran
-import copy
 import time
 import os
 ##
-from Player import Player
 from Move import Move
 import MoveList
 
@@ -34,9 +32,6 @@ class Pokemon:
 		#statModifier[4] = SPEED
 		#statModifier[5] = EVASION
 		#statModifier[6] = ACCURACCY
-	
-	def addOT(self, player):
-		self.trainer_ot = player.trainer_id
 
 	def changeNickname(self, new_nickname):
 		self.nickname = new_nickname
@@ -73,11 +68,6 @@ class Pokemon:
 		self.stats[gain+1] += (self.stats[gain+1])//10
 
 		self.stats[loss+1] = int( (self.stats[loss+1]) - (self.stats[loss+1])/10.0 ) 
-
-	def catchPokemon(self):
-		poke = copy.deepcopy(self)
-		poke.updateStats()
-		return poke
 
 
 
@@ -159,13 +149,18 @@ class Pokemon:
 	def useMove(self, move, target, battle):
 		
 		if move.category == 2:			
-			self.useSupportMove(move, target, battle)
 			battle.round()
+			self.useSupportMove(move, target, battle)
 			return
 
 		crit = 0
+		damage = 0
+		crit = 0
 
 		damage, crit = self.calculateDamage(move, target, battle)
+
+		if damage < 1:
+			damage = 1
 
 		accuracy = move.accuracy
 
@@ -223,28 +218,94 @@ class Pokemon:
 
 		return mod, crit
 
+	def calculateStatisticMod(self, target, category):
+
+		
+		if self.statModifier[category*2] > 1:
+			a = 1 + self.statModifier[category*2] * 0.5
+
+		if self.statModifier[category*2] < 1:
+
+			self.statModifier[category*2] *= -1
+
+			if self.statModifier[category*2]%2 == 0:
+				a = (1.0 / ( (self.statModifier[category*2] / 2) + 1))
+			
+			else:
+				a = (2.0 / (self.statModifier[category*2] + 2))
+
+		if self.statModifier[category*2] == 0:
+			a = 1
+
+		###
+
+		if target.statModifier[category*2 + 1] > 1:
+			d = 1 + target.statModifier[category*2 + 1] * 0.5
+
+		if target.statModifier[category*2 + 1] < 1:
+
+			target.statModifier[category*2 + 1] *= -1
+
+			if target.statModifier[category*2 + 1]%2 == 0:
+				d = (1.0 / ( (target.statModifier[category*2 + 1] / 2) + 1))
+			
+			else:
+				d = (2.0 / ( target.statModifier[category*2 + 1] + 2))
+
+		if target.statModifier[category*2 + 1] == 0:
+			d = 1
+
+		return a,d
+
+
 	def calculateDamage(self, move, target, battle):
 		
+		a_mod, d_mod = self.calculateStatisticMod(target, move.category)
+
 		# Physical
 		if move.category == 0: 
-			a = self.stats[1] + (self.stats[1] * self.statModifier[0])/2		# ATK
-			d = target.stats[2] + (target.stats[2] * target.statModifier[1])/2	# DEF
+
+			a = self.stats[1] * a_mod 	# ATK
+			d = target.stats[2] * d_mod	# DEF
 		
 		# Special
 		elif move.category == 1:
-			a = self.stats[3] + (self.stats[3] * self.statModifier[2])/2	#SP ATK
-			d = target.stats[4] + (self.stats[4] * self.statModifier[3])/2	#SP DEF
-		
+			a = self.stats[3] * a_mod	#SP ATK
+			d = target.stats[4] * d_mod	#SP DEF
+
 		#Other
 		else:
 			return 0, 0
 
+		if a <= 0:
+			a = 1
+
+		if d <= 0:
+			d = 1
+		
+
 		modifier, crit = self.calculateModifier(move, target, battle)
+
+		# CRITICAL ignores stat changes
+		if crit == 1:
+
+			if target.statModifier[1] > 0:
+				d = target.stats[4]
+
+			if self.statModifier[0] < 0:
+				a = self.stats[1]
+
+
 		damage = ( ( ( ( ( (2 * self.level)/5.0) + 2) * move.base_power * (a/ (d * 1.0) ) )/ 50.0 ) + 2 ) * modifier
 		damage = int(damage)
 
-		if damage <= 0:
-			damage = 1
+		'''
+		print('Base power: ' + move.base_power)
+		print('A: ' + a)
+		print('D: ' + d)
+		print('Mod: ' + modifier)		
+		time.sleep(1.0)
+		'''
 
 		return damage, crit
 			
