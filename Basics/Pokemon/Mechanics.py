@@ -106,8 +106,12 @@ def listTeamPokemon(player):
 	print('===\nSelect one:'),
 	opt = input()
 
+	if opt == 0:
+		return 0
+
 	poke = player.PokemonList[opt-1]
 	printPokeStats(poke)
+	return 1
 
 ###
 

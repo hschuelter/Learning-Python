@@ -132,6 +132,7 @@ class Pokemon:
 		if len(self.moves) < 4:
 			self.moves.append(move)
 
+		
 		else:
 			print ('Your Pokemon can\'t learn more than four moves...')
 			print ('Choose one to forget:')
@@ -141,6 +142,7 @@ class Pokemon:
 			option = input()
 
 			self.moves[option-1] = move
+		
 
 
 
@@ -256,7 +258,6 @@ class Pokemon:
 			d = 1
 
 		return a,d
-
 
 	def calculateDamage(self, move, target, battle):
 		
