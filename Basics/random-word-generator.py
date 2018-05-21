@@ -5,7 +5,7 @@ def main():
 
 	for i in range(0, 10000):
 		a = random.randint(0, 5)
-
+		
 		if a == 0: file.write("Dog ")
 		if a == 1: file.write("Cat ")
 		if a == 2: file.write("Bird ")

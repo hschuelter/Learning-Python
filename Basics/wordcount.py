@@ -21,7 +21,6 @@ def main(args):
 		print( word + '\t' + str(num) )
 
 
-
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Wordcount")
 	parser.add_argument('--file', '-f',
