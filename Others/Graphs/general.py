@@ -7,6 +7,7 @@ class Graph:
 
 		self.graph = {}
 
+		#Building the Graph
 		for i in range(0, self.n_edges):
 			origin  = int(file[i*3 + 3])
 			destiny = int(file[i*3 + 4])
@@ -22,8 +23,6 @@ class Graph:
 					self.graph[destiny].append( (origin, weight) )
 				else:
 					self.graph[destiny] = [ (origin ,weight) ]
-
-
 
 	def show(self):
 		print("Vertex: " + str(self.n_vertex))

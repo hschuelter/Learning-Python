@@ -83,9 +83,6 @@ def initializeGame():
 	pokemon[2].learnMove(moves[0]) # Tackle
 	pokemon[2].learnMove(moves[3]) # Tail Whip
 
-	
-
-
 	return pokemon, moves
 
 ###
@@ -202,7 +199,6 @@ def moveInfo(Move):
 
 def createPlayer():
 	speed = 0.1
-	'''
 	os.system('clear')
 	print_slow('Good morning!\n')
 	time.sleep(1)
@@ -216,7 +212,6 @@ def createPlayer():
 	time.sleep(1)
 	print_slow('why don\'t you tell me a little about yourself?\n')
 	time.sleep(1)
-	'''
 	print_slow('\nPlease,')
 	time.sleep(1)
 	print_slow(' tell me your name: '),
@@ -241,7 +236,7 @@ def createPlayer():
 		speed = 0.05
 
 	player = Player(name, gender)
-	'''
+
 	os.system('clear')
 	print_slow('Your very own tale of grand adventure is about to unfold.\n')
 	time.sleep(1)
@@ -251,7 +246,7 @@ def createPlayer():
 	time.sleep(1)
 	print_slow('Let\'s go to the world of Pokemon!')
 	time.sleep(4)
-	'''
+
 	return player
 
 def getYourFirstPokemon(player, pokemon):
@@ -259,7 +254,7 @@ def getYourFirstPokemon(player, pokemon):
 	print_slow('You can choose between three Pokemon:\n')
 	time.sleep(1)
 
-	'''
+
 
 	print_slow('\nBulbasaur, the Seed Pokemon,\n')
 	time.sleep(1)
@@ -275,7 +270,7 @@ def getYourFirstPokemon(player, pokemon):
 	time.sleep(1)
 	print_slow('The shells rounded shape helps minimize resistance in water, enabling it to swim at high speeds!\n')
 	time.sleep(3)
-	'''
+
 
 
 	choice = 0
