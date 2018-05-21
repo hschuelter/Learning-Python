@@ -2,7 +2,7 @@ import os
 
 class Move:
 
-	def __init__(self, name = '-', effect = '-', base_power = 0, accuracy = 0, total_PP = 0, category = '-', typing = 18, modifier = '-', priority = 0):
+	def __init__(self, name = '-', effect = '-', base_power = 0, accuracy = 0, total_PP = 0, category = '-', typing = 18, priority = 0):
 		self.name = name
 		self.effect = effect
 		self.base_power = base_power
@@ -14,7 +14,6 @@ class Move:
 		self.category = category
 		self.typing = typing
 
-		#self.modifier = modifier
 		self.priority = priority
 
 	# -----------------------------------------------

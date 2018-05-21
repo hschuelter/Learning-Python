@@ -27,17 +27,15 @@ class Battle:
 
 		print ('\n==========\n')
 
-		self.poke_p1.printBattleStats()
+		self.poke_p1.printBattleStats(player=True)
 
 		print ('\n==========\n')
 
+	def playerSwitch(self, poke):
+		self.poke_p1 = poke
+
+	def redSwitch(self, poke):
+		self.poke_p2 = poke
+	
 	def plusTurn(self):
 		self.turn += 1
-
-
-
-
-
-
-		
-

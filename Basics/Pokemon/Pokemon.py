@@ -50,13 +50,6 @@ class Pokemon:
 		self.stats.append(sp_defense)
 		self.stats.append(speed)
 
-		# self.hp = hp
-		# self.attack = attack
-		# self.defense = defense
-		# self.sp_attack = sp_attack
-		# self.sp_defense = sp_defense
-		# self.speed = speed
-
 	def updateStats(self):
 
 		gain = self.gainStat
@@ -68,10 +61,6 @@ class Pokemon:
 		self.stats[gain+1] += (self.stats[gain+1])//10
 
 		self.stats[loss+1] = int( (self.stats[loss+1]) - (self.stats[loss+1])/10.0 ) 
-
-
-
-
 
 	# -----------------------------------------------
 	# Getters:	
@@ -93,16 +82,19 @@ class Pokemon:
 
 		print ('Level:  ' + str(self.level) )
 
-	def printBattleStats(self):
+	def printBattleStats(self, player=False):
 		if self.shiny == 0:
-			print (self.nickname  + ' (' + self.species + ')'), 
+			print (self.nickname  + ' (' + self.species + ')')
 		else:
-			print (self.nickname  + ' (' + self.species + ') *'), 
+			print (self.nickname  + ' (' + self.species + ') *')
 
 		print ('Level:  ' + str(self.level) )
 
-		print('HP:\t' + str(self.current_hp) + '/' + str(self.stats[0]))
-
+		self.printHPbar()
+		if (player == True):
+			print(' ' + str(self.current_hp) + '/' + str(self.stats[0]))
+		else:
+			print('\n')
 
 	def printGenericBaseStats(self):
 		print('\nBase Stats:')
@@ -142,9 +134,6 @@ class Pokemon:
 			option = input()
 
 			self.moves[option-1] = move
-		
-
-
 
 	# BATTLE RELATED: ----------
 
@@ -186,8 +175,8 @@ class Pokemon:
 			print('It was a critical hit!')
 
 		#print('Luck: ' + str(luck))
-		print('Accuracy: ' + str(accuracy))
-		print('Damage: ' + str(damage))
+		#print('Accuracy: ' + str(accuracy))
+		#print('Damage: ' + str(damage))
 		print('')
 
 		if miss == 1:			
@@ -222,7 +211,9 @@ class Pokemon:
 
 	def calculateStatisticMod(self, target, category):
 
-		
+		a = 1
+		d = 1
+
 		if self.statModifier[category*2] > 1:
 			a = 1 + self.statModifier[category*2] * 0.5
 
@@ -312,6 +303,7 @@ class Pokemon:
 			
 	def useSupportMove(self, move, target, battle):
 		name = move.name
+		move.current_PP -= 1
 
 		if name == 'Growl':
 			MoveList.useGrowl(self, target)
@@ -321,3 +313,11 @@ class Pokemon:
 
 		if name == 'Swords Dance':
 			MoveList.useSwordsDance(self, target)
+
+	def printHPbar(self, length = 20, fill = '*'):
+		current = self.current_hp
+		total = self.stats[0]
+		percent = ("{0:.1f}").format(100 * (current / float(total)))
+		filledLength = int(length * current // total)
+		bar = fill * filledLength + '-' * (length - filledLength)
+		print('HP: |%s|' % bar),
