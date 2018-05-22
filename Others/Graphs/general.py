@@ -1,3 +1,5 @@
+import Dijkstra
+
 class Graph:
 	def __init__(self, file):
 		file = file.read().split()
@@ -39,11 +41,12 @@ def rewind(file):
 	file.seek(0)
 
 def main():
-	file = open("entrada.in", 'r', encoding='utf-8-sig')
+	file = open('entrada.in', 'r', encoding='utf-8-sig')
 	#print(file.read())
 	rewind(file)
 
 	g = Graph(file)
 	g.show()
+	Dijkstra.dijkstra(g)
 
 if __name__ == "__main__": main()
