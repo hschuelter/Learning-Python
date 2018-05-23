@@ -1,4 +1,4 @@
-# Learning_Python
+# Learning-Python
 
-Repository meant to store python scripts from basic to intermediate level.
-Also to store scripts used in Image Processing classes.
+Repository meant to store python scripts.
+Including scripts from Image Processing classes.
