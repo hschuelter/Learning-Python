@@ -21,9 +21,7 @@ def generateHOG(imgName):
     roughImage = cv2.imread(imgName, 0)
     image = cv2.resize(roughImage,(roughImage.shape[1]//4, roughImage.shape[0]//4), interpolation = cv2.INTER_CUBIC)
 
-    #norm = square_normalisation(image, 8)
-
-    (H, imageHOG) = feature.hog(norm, orientations=9, pixels_per_cell=(8, 8),
+    (H, imageHOG) = feature.hog(image, orientations=9, pixels_per_cell=(8, 8),
     cells_per_block=(2, 2), transform_sqrt=True, block_norm="L2-Hys",
     visualise=True)
     imageHOG = exposure.rescale_intensity(imageHOG, out_range=(0, 255))
@@ -31,27 +29,19 @@ def generateHOG(imgName):
 
     return imageHOG, image
 
-def square_normalisation(img, num):
-    new_img = np.zeros((img.shape[0], img.shape[1]), np.uint8)
-
-    for y in range (img.shape[0]):
-        for x in range (img.shape[1]):
-            new_img[y][x] = math.sqrt(img[y][x]) * num
-
-    return new_img
-
 
 def main():
-    imageHOG, rough, norm = generateHOG('boruto.jpg')
+    imageHOG, image = generateHOG('boruto.jpg')
+    hoggeru = cv2.HOGDescriptor()
+    print(hoggeru.getDescriptorSize())
     #templateHOG = generateHOG('butiful.png')
     #findu = findOcurrence(imageHOG, templateHOG)
     #print(findu==None)
 
     #normalize
+    image = np.sqrt(image).astype("uint8")
 
-    
-
-    cv2.imwrite('hog-norm-bolt.png', imageHOG)
+    cv2.imwrite('norm-bolt.png', image)
     #cv2.imwrite('bolt.png', rough)
     #cv2.imshow('Template', templateHOG)
     cv2.waitKey(0)
