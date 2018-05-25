@@ -1,5 +1,7 @@
 import cv2
 import math
+import imutils
+import datetime
 import numpy as np
 from skimage import feature
 from skimage import exposure
@@ -31,21 +33,42 @@ def generateHOG(imgName):
 
 
 def main():
-    imageHOG, image = generateHOG('boruto.jpg')
+    # imageHOG, image = generateHOG('boruto.jpg')
+    start = datetime.datetime.now()
     hoggeru = cv2.HOGDescriptor()
-    print(hoggeru.getDescriptorSize())
-    #templateHOG = generateHOG('butiful.png')
-    #findu = findOcurrence(imageHOG, templateHOG)
-    #print(findu==None)
+    image = cv2.imread('bus.jpeg')
+    image = imutils.resize(image, width=min(400, image.shape[1]))
 
-    #normalize
-    image = np.sqrt(image).astype("uint8")
+    hog = cv2.HOGDescriptor()
+    hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-    cv2.imwrite('norm-bolt.png', image)
-    #cv2.imwrite('bolt.png', rough)
-    #cv2.imshow('Template', templateHOG)
+    (rects, weights) = hog.detectMultiScale(image, winStride=(8,8),
+	padding=(16,16), scale=1.02 , useMeanshiftGrouping=False)
+    print("[INFO] detection took: {}s".format(
+	(datetime.datetime.now() - start).total_seconds()))
+
+    print (rects)
+
+    # draw the original bounding boxes
+    for (x, y, w, h) in rects:
+    	cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 255), 2)
+
+    cv2.imshow("Detections", image)
     cv2.waitKey(0)
+    # print(hoggeru.getDescriptorSize())
+    # #templateHOG = generateHOG('butiful.png')
+    # #findu = findOcurrence(imageHOG, templateHOG)
+    # #print(findu==None)
+    #
+    # #normalize
+    # image = np.sqrt(image).astype("uint8")
+    #
+    # cv2.imwrite('norm-bolt.png', image)
+    # #cv2.imwrite('bolt.png', rough)
+    # #cv2.imshow('Template', templateHOG)
     cv2.destroyAllWindows()
+
+
 
 
 main()
