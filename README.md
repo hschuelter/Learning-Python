@@ -1,4 +1,4 @@
 # Learning-Python
 
-Repository meant to store python scripts.
-Including scripts from Image Processing classes.
+Repository to store python scripts.
+Including Python scripts with OpenCV used on Image Processing classes @ PIM/UDESC.
