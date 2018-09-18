@@ -8,6 +8,25 @@ from Battle import Battle
 from Player import Player
 from Move import Move
 
+NORMAL = 0
+FIGHT  = 1
+FLYING = 2
+POISON = 3
+GROUND = 4
+ROCK   = 5
+BUG    = 6
+GHOST  = 7
+STEEL  = 8
+FIRE   = 9
+WATER  = 10
+GRASS  = 11
+ELECTR = 12
+PSYCHIC= 13
+ICE    = 14
+DRAGON = 15
+DARK   = 16
+FAIRY  = 17
+NULL   = 18
 
 typelist = 	['NORMAL', 'FIGHTING', 'FLYING', 'POISON',  	# [0  ~  3]
 			 'GROUND', 'ROCK', 'BUG', 'GHOST', 'STEEL', 	# [4  ~  8]
@@ -112,7 +131,7 @@ def listAllPokemon(Pokemon):
 
 	for i in range(0,len(Pokemon)):
 		print ( '   #' + str(i+1).zfill(3)  + ' - ' + Pokemon[i].species)
-	
+
 	print ('---\n')
 	print ('Choose a Pokemon:'),
 	opt = input()
@@ -143,7 +162,7 @@ def printGenericStats(Pokemon):
 	print('Type: '),
 	for i in range(0, len(Pokemon.typing) ):
 		if Pokemon.typing[i] != 18:
-			print('| ' + typelist[ Pokemon.typing[i] ]), 
+			print('| ' + typelist[ Pokemon.typing[i] ]),
 
 	print('|')
 
@@ -151,7 +170,7 @@ def printGenericStats(Pokemon):
 
 	printMoves(Pokemon)
 
-def printPokeStats(Pokemon):	
+def printPokeStats(Pokemon):
 	os.system('clear')
 	Pokemon.printSimpleStats()
 	print ('OT: ' + str(Pokemon.trainer_ot).zfill(5))
@@ -177,12 +196,12 @@ def printMoves(Pokemon):
 def moveInfo(Move):
 
 	os.system('clear')
-	
+
 	if(Move.name == '-'):
 		print ('Invalid choice')
 		return -1
 
-	
+
 	print (Move.name)
 	print ('+---------------+---------------+')
 	print ('|  TYPE:\t|     ' + 	typelist[Move.typing] + '\t|')
@@ -232,7 +251,7 @@ def createPlayer():
 		print('  2) Girl')
 		print('  3) OTHER')
 		gender = input('Choice: ')
-		
+
 		speed = 0.05
 
 	player = Player(name, gender)
@@ -316,7 +335,7 @@ def getYourFirstPokemon(player, pokemon):
 
 	blue = Player('Blue', 1)
 	blue.catchPokemon(pokemon[(choice+1)%3])
-	
+
 
 	print('Blue picked ' + blue.PokemonList[0].species)
 	time.sleep(1)
@@ -331,7 +350,7 @@ def battleStart(player, rival):
 	while( opt != -1):
 		os.system('clear')
 		battle.round()
-	
+
 		print('What will you do?')
 		print('1 - Fight')
 		print('2 - Run')
@@ -357,13 +376,13 @@ def battleStart(player, rival):
 
 					if battle.poke_p1.stats[5] > battle.poke_p2.stats[5]: # PLAYER IS FASTER
 						battle.poke_p1.useMove(move1, battle.poke_p2, battle)
-						
+
 						time.sleep(3)
 						if battle.poke_p2.current_hp <= 0:
 							print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
 							return player
 
-						battle.poke_p2.useMove(moveR, battle.poke_p1, battle)						
+						battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
 						time.sleep(3)
 						if battle.poke_p1.current_hp <= 0:
 							print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
@@ -371,7 +390,7 @@ def battleStart(player, rival):
 
 					elif battle.poke_p1.stats[5] < battle.poke_p2.stats[5]:
 						battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
-						
+
 						time.sleep(3)
 						if battle.poke_p1.current_hp <= 0:
 							print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
@@ -379,7 +398,7 @@ def battleStart(player, rival):
 
 
 						battle.poke_p1.useMove(move1, battle.poke_p2, battle)
-						
+
 						time.sleep(3)
 						if battle.poke_p2.current_hp <= 0:
 							print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
@@ -389,21 +408,21 @@ def battleStart(player, rival):
 						luck = ran.randint(0,10)
 						if (luck % 2) == 0: # PLAYER
 							battle.poke_p1.useMove(move1, battle.poke_p2, battle)
-						
+
 							time.sleep(3)
 							if battle.poke_p2.current_hp <= 0:
 								print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
 								return player
 
-							battle.poke_p2.useMove(moveR, battle.poke_p1, battle)						
+							battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
 							time.sleep(3)
 							if battle.poke_p1.current_hp <= 0:
 								print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
 								return rival
-						
+
 						else: # RIVAL
 							battle.poke_p2.useMove(moveR, battle.poke_p1, battle)
-						
+
 							time.sleep(3)
 							if battle.poke_p1.current_hp <= 0:
 								print_slow('\n' + battle.poke_p1.nickname + ' fainted...\n')
@@ -411,11 +430,11 @@ def battleStart(player, rival):
 
 
 							battle.poke_p1.useMove(move1, battle.poke_p2, battle)
-							
+
 							time.sleep(3)
 							if battle.poke_p2.current_hp <= 0:
 								print_slow('\n' + battle.poke_p2.nickname + ' fainted...\n')
-							
+
 
 
 					time.sleep(3)
@@ -427,7 +446,7 @@ def battleStart(player, rival):
 
 		else:
 			opt = 0
- 
+
 	time.sleep(2)
 
 
