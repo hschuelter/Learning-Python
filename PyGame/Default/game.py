@@ -24,8 +24,11 @@ def draw(screen):
 
 	screen.fill(background)
 	pygame.draw.circle(screen, (0,0,255), (random.randint(circle_radius, w - circle_radius ), random.randint(circle_radius, h - circle_radius)), circle_radius, circle_thickness)
-	pygame.display.flip()
+	update(screen)
 
+
+def update(screen):
+	pygame.display.flip()
 
 def main():
 	print("Starting...")
