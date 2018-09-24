@@ -1,42 +1,62 @@
-import Settings
 import pygame
 import random
+##
+from Settings import Settings
+##
 
 def setup():
 	# resolution = (1280, 720)
 	resolution = (720, 540)
+	settings = Settings(resolution, 60)
 
 	pygame.display.set_caption('Joguito')
 	screen  = pygame.display.set_mode(resolution)
 
-	return screen
+	return screen, settings
 
 
-def draw(screen):
-	background = (255, 255, 255)
+def draw(screen, settings):
+	background = (0, 0, 0)
+	color = (180, 180, 255)
+	black = (10,10,10)
+	white = (230,230,230)
 
-	info = pygame.display.Info()
-	w = info.current_w
-	h = info.current_h
+	w = settings.resolution[0]
+	h = settings.resolution[1]
 
-	circle_radius = 5
-	circle_thickness = 5
+	y_num = 20
+	x_num = 20
+	thicc = 10
+	cont = 0
 
 	screen.fill(background)
-	pygame.draw.circle(screen, (0,0,255), (random.randint(circle_radius, w - circle_radius ), random.randint(circle_radius, h - circle_radius)), circle_radius, circle_thickness)
-	update(screen)
+	for y in range(0, y_num):
+		for x in range(0, x_num):
+
+			if(cont % 2 == 0):
+				color = white
+			else:
+				color = black
+			pygame.draw.rect(screen, color,
+							( (w * x) / x_num, 	 # X Starting point
+							(h * y) / y_num,	 # Y Starting point
+							(w / x_num),		 # X size
+							(h / y_num)))		 # Y size
+			cont += 1
+	update()
 
 
-def update(screen):
+def update():
 	pygame.display.flip()
 
 def main():
 	print("Starting...")
-	screen = setup()
+
+	screen, settings = setup()
 
 	running = True
 	while(running):
-		draw(screen)
+		draw(screen, settings)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False

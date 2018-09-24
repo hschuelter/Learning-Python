@@ -7,6 +7,6 @@ class Settings:
         self.resolution = (1280, 720)   # WIDTH, HEIGHT
         self.framerate = 60
 
-    def __init__(self, width, height, framerate):
-        self.resolution = (width, height)
+    def __init__(self, resolution, framerate):
+        self.resolution = resolution
         self.framerate = framerate
